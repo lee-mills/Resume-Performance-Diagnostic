@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Resume Performance Diagnostic</title>
-<!-- LinkedIn / Open Graph preview -->
-<meta property="og:title" content="Resume Performance Diagnostic">
-<meta property="og:description" content="ATS Compatibility and Recruiter Review Detailed Diagnostics">
-<meta property="og:image" content="https://lee-mills.github.io/Resume-Performance-Diagnostic/Website_Preview.png">
-<meta property="og:url" content="https://lee-mills.github.io/Resume-Performance-Diagnostic/">
-<meta property="og:type" content="website">
+  <!-- LinkedIn / Open Graph preview -->
+  <meta property="og:title" content="Resume Performance Diagnostic">
+  <meta property="og:description" content="ATS Compatibility and Recruiter Review Detailed Diagnostics">
+  <meta property="og:image" content="https://lee-mills.github.io/Resume-Performance-Diagnostic/Website_Preview.png">
+  <meta property="og:url" content="https://lee-mills.github.io/Resume-Performance-Diagnostic/">
+  <meta property="og:type" content="website">
+
   <style>
     body{
       margin:0;
@@ -20,8 +21,7 @@
       background:#0b1b2b;
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
-    
-   
+
     /* Stage keeps the image aspect ratio so overlays never drift */
     .stage{
       position:relative;
@@ -65,8 +65,10 @@
     /* Screen-reader label */
     .sr-only{
       position:absolute;
-      width:1px;height:1px;
-      padding:0;margin:-1px;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
       overflow:hidden;
       clip:rect(0,0,0,0);
       white-space:nowrap;
@@ -109,6 +111,48 @@
       display:block;
       border-radius:10px;
     }
+
+    /* System Core popup */
+    dialog#scModal{
+      border:none;
+      padding:0;
+      border-radius:12px;
+      width:min(760px, 86vw);
+      box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    }
+    dialog#scModal::backdrop{
+      background:rgba(0,0,0,0.55);
+    }
+    .scModalInner{
+      position:relative;
+      background:#ffffff;
+      padding:24px;
+      max-height:78vh;
+      overflow-y:auto;
+    }
+    .scModalClose{
+      position:absolute;
+      top:10px;
+      right:10px;
+      border:0;
+      border-radius:10px;
+      padding:8px 10px;
+      cursor:pointer;
+      background:#0b1b2b;
+      color:#fff;
+      font-weight:600;
+      font-size:14px;
+      line-height:1;
+    }
+    .scCopy{
+      color:#111;
+      font-size:18px;
+      line-height:1.7;
+      padding-right:12px;
+    }
+    .scCopy p{
+      margin:0;
+    }
   </style>
 </head>
 
@@ -128,6 +172,21 @@
               height: 2.757%;
             ">
       <span class="sr-only">Diagnostic Framework</span>
+    </button>
+
+    <!-- SYSTEM CORE (popup) -->
+    <button class="hotspot"
+            id="btnSystemCore"
+            type="button"
+            aria-haspopup="dialog"
+            aria-label="System Core"
+            style="
+              left: 59.7802%;
+              top: 31.5430%;
+              width: 19.1209%;
+              height: 3.2715%;
+            ">
+      <span class="sr-only">System Core</span>
     </button>
 
     <!-- VIEW SAMPLE REPORT (OPEN PDF IN NEW TAB) -->
@@ -159,7 +218,8 @@
        ">
       <span class="sr-only">Submit Resume</span>
     </a>
-        <!-- CONTACT EMAIL -->
+
+    <!-- CONTACT EMAIL -->
     <a class="hotspot"
        href="mailto:leemills.resume@gmail.com"
        aria-label="Contact email"
@@ -181,6 +241,18 @@
     </div>
   </dialog>
 
+  <!-- System Core modal -->
+  <dialog id="scModal" aria-label="System Core">
+    <div class="scModalInner">
+      <button class="scModalClose" type="button" id="scCloseBtn">Close</button>
+      <div class="scCopy">
+        <p><strong>SYSTEM CORE:</strong><br>
+          OpenAI functions as the heuristic analysis layer within the diagnostic pipeline. Before deterministic scoring and report generation occur, the system submits extracted resume text together with the target job title and any job description for guided evaluation under a defined prompt-based rule set. OpenAI then performs a qualitative assessment using semantic matching, contextual interpretation, evidence found in the resume text, and the prompt’s instructed judgment rules to determine alignment with each required criterion. That assessment is returned as structured JSON, which the script then validates and uses downstream for deterministic scoring, field population, and report generation.
+        </p>
+      </div>
+    </div>
+  </dialog>
+
   <script>
     // DIAGNOSTIC FRAMEWORK popup
     const dfBtn = document.getElementById("btnDiagnosticFramework");
@@ -193,6 +265,18 @@
     });
 
     dfCloseBtn.addEventListener("click", () => dfModal.close());
+
+    // SYSTEM CORE popup
+    const scBtn = document.getElementById("btnSystemCore");
+    const scModal = document.getElementById("scModal");
+    const scCloseBtn = document.getElementById("scCloseBtn");
+
+    scBtn.addEventListener("click", () => {
+      if (typeof scModal.showModal === "function") scModal.showModal();
+      else alert("Your browser does not support <dialog>. Use a modern browser.");
+    });
+
+    scCloseBtn.addEventListener("click", () => scModal.close());
 
     // VIEW SAMPLE REPORT (open PDF in a new tab)
     const sampleBtn = document.getElementById("btnSampleReport");
