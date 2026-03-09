@@ -28,7 +28,7 @@
       width:min(1100px,100%);
       aspect-ratio:1365 / 2048;
       margin:0 auto;
-      background-image:url("Website%20Template.png"); /* <-- your main template image */
+      background-image:url("Website%20Template.png");
       background-size:cover;
       background-position:center top;
       background-repeat:no-repeat;
@@ -46,8 +46,6 @@
       margin:0;
       border-radius:10px;
       cursor:pointer;
-
-      /* HARD-KILL any accidental visible text rendering */
       font-size:0;
       line-height:0;
       color:transparent;
@@ -153,6 +151,57 @@
     .scCopy p{
       margin:0;
     }
+
+    /* Privacy Note popup */
+    dialog#pnModal{
+      border:none;
+      padding:0;
+      border-radius:12px;
+      width:min(820px, 88vw);
+      box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    }
+    dialog#pnModal::backdrop{
+      background:rgba(0,0,0,0.55);
+    }
+    .pnModalInner{
+      position:relative;
+      background:#ffffff;
+      padding:24px;
+    }
+    .pnModalClose{
+      position:absolute;
+      top:10px;
+      right:10px;
+      border:0;
+      border-radius:10px;
+      padding:8px 10px;
+      cursor:pointer;
+      background:#0b1b2b;
+      color:#fff;
+      font-weight:600;
+      font-size:14px;
+      line-height:1;
+    }
+    .pnTextBox{
+      margin-top:44px;
+      height:230px;
+      overflow-y:scroll;
+      padding-right:12px;
+      box-sizing:border-box;
+    }
+    .pnCopy{
+      color:#111;
+      font-family:"Times New Roman", Georgia, serif;
+      font-size:24px;
+      line-height:1.2;
+    }
+    .pnHeading{
+      margin:0 0 16px 0;
+      font-weight:700;
+    }
+    .pnParagraph{
+      margin:0;
+    }
   </style>
 </head>
 
@@ -189,8 +238,22 @@
       <span class="sr-only">System Core Logic</span>
     </button>
 
+    <!-- PRIVACY NOTE (popup) -->
+    <button class="hotspot"
+            id="btnPrivacyNote"
+            type="button"
+            aria-haspopup="dialog"
+            aria-label="Privacy Note"
+            style="
+              left: 29.6703%;
+              top: 49.4385%;
+              width: 19.1209%;
+              height: 3.2715%;
+            ">
+      <span class="sr-only">Privacy Note</span>
+    </button>
+
     <!-- VIEW SAMPLE REPORT (OPEN PDF IN NEW TAB) -->
-    <!-- Using a BUTTON + JS prevents the “faint code line” issue entirely. -->
     <button class="hotspot"
             id="btnSampleReport"
             type="button"
@@ -198,7 +261,7 @@
             style="
               left: 66.8132%;
               top: 68.2129%;
-              width: 21.0989%;
+              width: 15.567%;
               height: 2.3438%;
             ">
       <span class="sr-only">View Sample Report</span>
@@ -253,6 +316,21 @@
     </div>
   </dialog>
 
+  <!-- Privacy Note modal -->
+  <dialog id="pnModal" aria-label="Privacy Note">
+    <div class="pnModalInner">
+      <button class="pnModalClose" type="button" id="pnCloseBtn">Close</button>
+      <div class="pnTextBox">
+        <div class="pnCopy">
+          <p class="pnHeading"><strong>PRIVACY NOTE:</strong></p>
+          <p class="pnParagraph">
+            Should you decide to submit a resume, mask contact and location information by replacing letters with <strong>X</strong> and numbers with <strong>0</strong> while keeping the same formatting, punctuation, and field placement. This helps preserve resume structure for accurate document evaluation. Leave @ and .com for email address format identification. Also note, resumes must be uploaded in PDF format to eliminate any possibility of hidden leftover document content (such as revision data or embedded styles) that can interfere with accurate resume scanning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <script>
     // DIAGNOSTIC FRAMEWORK popup
     const dfBtn = document.getElementById("btnDiagnosticFramework");
@@ -277,6 +355,18 @@
     });
 
     scCloseBtn.addEventListener("click", () => scModal.close());
+
+    // PRIVACY NOTE popup
+    const pnBtn = document.getElementById("btnPrivacyNote");
+    const pnModal = document.getElementById("pnModal");
+    const pnCloseBtn = document.getElementById("pnCloseBtn");
+
+    pnBtn.addEventListener("click", () => {
+      if (typeof pnModal.showModal === "function") pnModal.showModal();
+      else alert("Your browser does not support <dialog>. Use a modern browser.");
+    });
+
+    pnCloseBtn.addEventListener("click", () => pnModal.close());
 
     // VIEW SAMPLE REPORT (open PDF in a new tab)
     const sampleBtn = document.getElementById("btnSampleReport");
