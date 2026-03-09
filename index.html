@@ -22,7 +22,6 @@
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
 
-    /* Stage keeps the image aspect ratio so overlays never drift */
     .stage{
       position:relative;
       width:min(1100px,100%);
@@ -36,7 +35,6 @@
       overflow:hidden;
     }
 
-    /* Hotspots (work for <a> or <button>) */
     .hotspot{
       position:absolute;
       display:block;
@@ -55,12 +53,12 @@
       outline:2px solid rgba(255,255,255,0.35);
       outline-offset:2px;
     }
+
     .hotspot:focus-visible{
       outline:3px solid rgba(255,255,255,0.65);
       outline-offset:3px;
     }
 
-    /* Screen-reader label */
     .sr-only{
       position:absolute;
       width:1px;
@@ -78,17 +76,20 @@
       border:none;
       padding:0;
       border-radius:12px;
-      width:min(660px, 82vw);
+      width:min(400px, 82vw);
       box-shadow:0 20px 60px rgba(0,0,0,0.45);
     }
+
     dialog#dfModal::backdrop{
       background:rgba(0,0,0,0.55);
     }
+
     .dfModalInner{
       position:relative;
       background:#ffffff;
       padding:16px;
     }
+
     .dfModalClose{
       position:absolute;
       top:10px;
@@ -102,7 +103,17 @@
       font-weight:600;
       font-size:14px;
       line-height:1;
+      z-index:2;
     }
+
+    .dfTextBox{
+      margin-top:44px;
+      height:300px;
+      overflow-y:scroll;
+      padding-right:12px;
+      box-sizing:border-box;
+    }
+
     .dfImg{
       width:100%;
       height:auto;
@@ -110,25 +121,8 @@
       border-radius:10px;
     }
 
-    /* System Core Logic popup */
-    dialog#scModal{
-      border:none;
-      padding:0;
-      border-radius:12px;
-      width:min(760px, 86vw);
-      box-shadow:0 20px 60px rgba(0,0,0,0.45);
-    }
-    dialog#scModal::backdrop{
-      background:rgba(0,0,0,0.55);
-    }
-    .scModalInner{
-      position:relative;
-      background:#ffffff;
-      padding:24px;
-      max-height:78vh;
-      overflow-y:auto;
-    }
-    .scModalClose{
+    /* Shared popup close button */
+    .modalClose{
       position:absolute;
       top:10px;
       right:10px;
@@ -141,13 +135,43 @@
       font-weight:600;
       font-size:14px;
       line-height:1;
+      z-index:2;
     }
+
+    /* System Core Logic popup */
+    dialog#scModal{
+      border:none;
+      padding:0;
+      border-radius:12px;
+      width:min(440px, 86vw);
+      box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    dialog#scModal::backdrop{
+      background:rgba(0,0,0,0.55);
+    }
+
+    .scModalInner{
+      position:relative;
+      background:#ffffff;
+      padding:24px;
+    }
+
+    .scTextBox{
+      margin-top:44px;
+      height:340px;
+      overflow-y:scroll;
+      padding-right:12px;
+      box-sizing:border-box;
+    }
+
     .scCopy{
       color:#111;
+      font-family:Arial, sans-serif;
       font-size:18px;
-      line-height:1.7;
-      padding-right:12px;
+      line-height:1.4;
     }
+
     .scCopy p{
       margin:0;
     }
@@ -157,48 +181,40 @@
       border:none;
       padding:0;
       border-radius:12px;
-      width:min(820px, 88vw);
+      width:min(420px, 88vw);
       box-shadow:0 20px 60px rgba(0,0,0,0.45);
     }
+
     dialog#pnModal::backdrop{
       background:rgba(0,0,0,0.55);
     }
+
     .pnModalInner{
       position:relative;
       background:#ffffff;
       padding:24px;
     }
-    .pnModalClose{
-      position:absolute;
-      top:10px;
-      right:10px;
-      border:0;
-      border-radius:10px;
-      padding:8px 10px;
-      cursor:pointer;
-      background:#0b1b2b;
-      color:#fff;
-      font-weight:600;
-      font-size:14px;
-      line-height:1;
-    }
+
     .pnTextBox{
       margin-top:44px;
-      height:230px;
+      height:240px;
       overflow-y:scroll;
       padding-right:12px;
       box-sizing:border-box;
     }
+
     .pnCopy{
       color:#111;
-      font-family:"Times New Roman", Georgia, serif;
-      font-size:24px;
-      line-height:1.2;
+      font-family:Arial, sans-serif;
+      font-size:18px;
+      line-height:1.4;
     }
+
     .pnHeading{
       margin:0 0 16px 0;
       font-weight:700;
     }
+
     .pnParagraph{
       margin:0;
     }
@@ -253,7 +269,7 @@
       <span class="sr-only">Privacy Note</span>
     </button>
 
-    <!-- VIEW SAMPLE REPORT (OPEN PDF IN NEW TAB) -->
+    <!-- VIEW SAMPLE REPORT -->
     <button class="hotspot"
             id="btnSampleReport"
             type="button"
@@ -261,13 +277,13 @@
             style="
               left: 66.8132%;
               top: 68.2129%;
-              width: 15.567%;
+              width: 21.0989%;
               height: 2.3438%;
             ">
       <span class="sr-only">View Sample Report</span>
     </button>
 
-    <!-- SUBMIT RESUME (Google Form) -->
+    <!-- SUBMIT RESUME -->
     <a class="hotspot"
        href="https://forms.gle/hCWXAvYTgk5oA7MY9"
        target="_blank"
@@ -300,18 +316,22 @@
   <dialog id="dfModal" aria-label="Diagnostic Framework">
     <div class="dfModalInner">
       <button class="dfModalClose" type="button" id="dfCloseBtn">Close</button>
-      <img class="dfImg" src="DIAGNOSTIC%20FRAMEWORK.png" alt="ATS and Recruiter Review Criteria" />
+      <div class="dfTextBox">
+        <img class="dfImg" src="DIAGNOSTIC%20FRAMEWORK.png" alt="ATS and Recruiter Review Criteria" />
+      </div>
     </div>
   </dialog>
 
   <!-- System Core Logic modal -->
   <dialog id="scModal" aria-label="System Core Logic">
     <div class="scModalInner">
-      <button class="scModalClose" type="button" id="scCloseBtn">Close</button>
-      <div class="scCopy">
-        <p><strong>SYSTEM CORE LOGIC:</strong><br>
-          Advanced AI functions as the heuristic analysis layer within the diagnostic pipeline. Before deterministic scoring and report generation occur, the system submits extracted resume text together with the target job title and any job description for guided evaluation under a defined prompt-based rule set. Advanced AI then performs a qualitative assessment using semantic matching, contextual interpretation, evidence found in the resume text, and the prompt’s instructed judgment rules to determine alignment with each required criterion. That assessment is returned as structured JSON, which the script then validates and uses downstream for deterministic scoring, field population, and report generation.
-        </p>
+      <button class="modalClose" type="button" id="scCloseBtn">Close</button>
+      <div class="scTextBox">
+        <div class="scCopy">
+          <p><strong>SYSTEM CORE LOGIC:</strong><br><span style="display:block;height:0.5em;"></span>
+            Advanced AI functions as the heuristic analysis layer within the diagnostic pipeline. Before deterministic scoring and report generation occur, the system submits extracted resume text together with the target job title and any job description for guided evaluation under a defined prompt-based rule set. Advanced AI then performs a qualitative assessment using semantic matching, contextual interpretation, evidence found in the resume text, and the prompt’s instructed judgment rules to determine alignment with each required criterion. That assessment is returned as structured JSON, which the script then validates and uses downstream for deterministic scoring, field population, and report generation.
+          </p>
+        </div>
       </div>
     </div>
   </dialog>
@@ -319,12 +339,11 @@
   <!-- Privacy Note modal -->
   <dialog id="pnModal" aria-label="Privacy Note">
     <div class="pnModalInner">
-      <button class="pnModalClose" type="button" id="pnCloseBtn">Close</button>
+      <button class="modalClose" type="button" id="pnCloseBtn">Close</button>
       <div class="pnTextBox">
         <div class="pnCopy">
-          <p class="pnHeading"><strong>PRIVACY NOTE:</strong></p>
-          <p class="pnParagraph">
-            Should you decide to submit a resume, mask resume contact and location information by replacing letters with <strong>X</strong> and numbers with <strong>0</strong> while keeping the same formatting, punctuation, and field placement. This helps preserve resume structure for accurate document evaluation. Leave @ and .com for email address format identification. Also note, resumes must be uploaded in PDF format to eliminate any possibility of hidden leftover document content (such as revision data or embedded styles) that can interfere with accurate resume scanning.
+          <p><strong>PRIVACY NOTE:</strong><BR><span style="display:block;height:0.5em;"></span>
+            Should you choose to submit a resume, mask resume contact and location information by replacing letters with <strong>X</strong> and numbers with <strong>0</strong> while keeping the same formatting, punctuation, and field placement. This helps preserve resume structure for accurate document evaluation. Leave @ and .com for email address format identification. Also note: resumes must be uploaded in PDF format to eliminate any possibility of hidden leftover document content (such as revision data or embedded styles) that can interfere with accurate resume scanning.
           </p>
         </div>
       </div>
@@ -368,7 +387,7 @@
 
     pnCloseBtn.addEventListener("click", () => pnModal.close());
 
-    // VIEW SAMPLE REPORT (open PDF in a new tab)
+    // VIEW SAMPLE REPORT
     const sampleBtn = document.getElementById("btnSampleReport");
     sampleBtn.addEventListener("click", () => {
       window.open("Sample%20Report.pdf", "_blank", "noopener");
