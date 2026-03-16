@@ -353,7 +353,7 @@
     fetch(counterUrl)
       .then(response => response.json())
       .then(data => {
-        document.getElementById("visitorCounter").textContent = "Visits: " + data.count;
+        document.getElementById("visitorCounter").textContent = "" + data.count;
       })
       .catch(() => {
         document.getElementById("visitorCounter").textContent = "Visits: unavailable";
