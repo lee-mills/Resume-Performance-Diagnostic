@@ -264,14 +264,14 @@
     <div id="visitorCounter"
          style="
            position:absolute;
-           left: 89.2%;
-           top: 98.60%;
+           left: 73.2%;
+           top: 80.60%;
            width: 16%;
            height: 1.2%;
            font-family:Arial,sans-serif;
            font-size:16px;
            font-weight:600;
-           color:#bfc2cb;
+           color:#35507a;
            text-align:left;
            line-height:1.2;
          ">
@@ -335,14 +335,28 @@
       window.open("Sample%20Report.pdf", "_blank", "noopener");
     });
 
-    fetch("https://site-counter-502041884836.us-south1.run.app")
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById("visitorCounter").textContent = "Visits: " + data.count;
-      })
-      .catch(() => {
-        document.getElementById("visitorCounter").textContent = "Visits: unavailable";
-      });    
+        const params = new URLSearchParams(window.location.search);
+
+    if (params.get("nocount") === "1") {
+      localStorage.setItem("skipVisitorCount", "1");
+    }
+
+    if (params.get("countme") === "1") {
+      localStorage.removeItem("skipVisitorCount");
+    }
+
+    if (localStorage.getItem("skipVisitorCount") === "1") {
+      document.getElementById("visitorCounter").textContent = "Visits: --";
+    } else {
+      fetch("https://site-counter-502041884836.us-south1.run.app")
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("visitorCounter").textContent = "Visits: " + data.count;
+        })
+        .catch(() => {
+          document.getElementById("visitorCounter").textContent = "Visits: unavailable";
+        });
+    }
   </script>
 </body>
 </html>
